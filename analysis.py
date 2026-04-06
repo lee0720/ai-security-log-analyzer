@@ -12,7 +12,8 @@ def ip_analysis(df):
     return df["ip"].value_counts()
 
 def status_analysis(df):
-    df["status"] = df["raw"].str.extract(r'\s(\d{3})\s')
+    # 行末の " ... HTTP/1.1" 200 のように、200 の後ろに空白がないログも拾う
+    df["status"] = df["raw"].str.extract(r'\s(\d{3})(?:\s|$)')
     return df["status"].value_counts()
 
 def error_logs(df):
